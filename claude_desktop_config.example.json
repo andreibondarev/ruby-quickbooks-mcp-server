@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "quickbooks": {
+      "command": "ruby",
+      "args": [
+        "/Users/andrei/Code/qbo-mcp-server/ruby-quickbooks-mcp-server/bin/quickbooks_mcp_server"
+      ],
+      "env": {
+        "QUICKBOOKS_CLIENT_ID": "ABn8bI47cBfR9T2am4sBA4nNGLdR3IkGHodTi3siKqHluc6BeI",
+        "QUICKBOOKS_CLIENT_SECRET": "CRdNE5sHQDKcsS9dsLEvGag0toLMcwlpxoTnmjMR",
+        "QUICKBOOKS_REFRESH_TOKEN": "your_refresh_token_here",
+        "QUICKBOOKS_REALM_ID": "your_realm_id_here",
+        "QUICKBOOKS_ENVIRONMENT": "sandbox"
+      }
+    }
+  }
+}

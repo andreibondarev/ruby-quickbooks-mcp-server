@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/quickbooks_mcp_server'
+
+begin
+  QuickbooksMCPServer.run_stdio
+rescue StandardError => e
+  warn "Error: #{e.message}"
+  warn e.backtrace.join("\n")
+  exit 1
+end

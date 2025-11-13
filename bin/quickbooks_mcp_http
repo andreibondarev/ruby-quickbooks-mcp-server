@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/quickbooks_mcp_server'
+
+begin
+  port = ENV['PORT'] || 3000
+  stateless = ENV['STATELESS'] == 'true'
+
+  QuickbooksMCPServer.run_http(port: port.to_i, stateless: stateless)
+rescue StandardError => e
+  warn "Error: #{e.message}"
+  warn e.backtrace.join("\n")
+  exit 1
+end
