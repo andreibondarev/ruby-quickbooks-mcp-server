@@ -1,5 +1,5 @@
 require 'dotenv/load'
-require_relative './../../ruby-sdk/lib/mcp.rb'
+require 'mcp'
 require 'json'
 require 'securerandom'
 
