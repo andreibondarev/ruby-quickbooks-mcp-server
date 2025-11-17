@@ -59,7 +59,7 @@ module Tools
           service = qb_client.service('Account')
 
           account = Quickbooks::Model::Account.new(args[:account])
-          result = service.update(account)
+          result = service.update(account, sparse: true)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Account updated:' },

@@ -141,11 +141,11 @@ customer = server.update_customer({
 })
 ```
 
-### `delete_customer(id, sync_token)`
+### `delete_customer(id)`
 Delete (deactivate) a customer.
 
 ```ruby
-result = server.delete_customer('123', '0')
+result = server.delete_customer('123')
 ```
 
 ## Invoice Methods

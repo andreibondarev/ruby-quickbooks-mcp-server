@@ -92,7 +92,7 @@ module Tools
           service = qb_client.service('JournalEntry')
 
           journal_entry = ::Quickbooks::Model::JournalEntry.new(args[:journal_entry])
-          result = service.update(journal_entry)
+          result = service.update(journal_entry, sparse: true)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Journal entry updated:' },

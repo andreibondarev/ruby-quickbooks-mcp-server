@@ -92,7 +92,7 @@ module Tools
           service = qb_client.service('Purchase')
 
           purchase = Quickbooks::Model::Purchase.new(args[:purchase])
-          result = service.update(purchase)
+          result = service.update(purchase, sparse: true)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Purchase updated:' },

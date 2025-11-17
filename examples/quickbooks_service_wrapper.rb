@@ -38,8 +38,8 @@ class QuickbooksService
     call_tool('update_customer', { customer: customer_data })
   end
 
-  def delete_customer(id, sync_token)
-    call_tool('delete_customer', { id: id, sync_token: sync_token })
+  def delete_customer(id)
+    call_tool('delete_customer', { id: id })
   end
 
   # Invoice methods

@@ -92,7 +92,7 @@ module Tools
           service = qb_client.service('Vendor')
 
           vendor = ::Quickbooks::Model::Vendor.new(args[:vendor])
-          result = service.update(vendor)
+          result = service.update(vendor, sparse: true)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Vendor updated:' },

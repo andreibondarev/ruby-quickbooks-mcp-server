@@ -92,7 +92,7 @@ module Tools
           service = qb_client.service('Employee')
 
           employee = ::Quickbooks::Model::Employee.new(args[:employee])
-          result = service.update(employee)
+          result = service.update(employee, sparse: true)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Employee updated:' },

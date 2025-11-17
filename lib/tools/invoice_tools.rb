@@ -92,7 +92,7 @@ module Tools
           service = qb_client.service('Invoice')
 
           invoice = ::Quickbooks::Model::Invoice.new(args[:invoice])
-          result = service.update(invoice)
+          result = service.update(invoice, sparse: true)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Invoice updated:' },

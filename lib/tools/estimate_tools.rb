@@ -92,7 +92,7 @@ module Tools
           service = qb_client.service('Estimate')
 
           estimate = ::Quickbooks::Model::Estimate.new(args[:estimate])
-          result = service.update(estimate)
+          result = service.update(estimate, sparse: true)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Estimate updated:' },
