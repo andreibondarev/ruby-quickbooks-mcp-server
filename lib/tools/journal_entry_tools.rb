@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('JournalEntry')
 
-          journal_entry = Quickbooks::Model::JournalEntry.new
-          journal_entry.from_json(args[:journal_entry].to_json)
+          journal_entry = ::Quickbooks::Model::JournalEntry.new(args[:journal_entry])
           result = service.create(journal_entry)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Journal entry created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Journal entry found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('JournalEntry')
 
-          journal_entry = Quickbooks::Model::JournalEntry.new
-          journal_entry.from_json(args[:journal_entry].to_json)
+          journal_entry = ::Quickbooks::Model::JournalEntry.new(args[:journal_entry])
           result = service.update(journal_entry)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Journal entry updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -132,7 +130,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Journal entry deleted:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -181,7 +179,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: "Found #{results.count} journal entries:" },
-            *results.map { |je| { type: 'text', text: JSON.pretty_generate(je.as_json) } }
+            *results.map { |je| { type: 'text', text: je.attributes } }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

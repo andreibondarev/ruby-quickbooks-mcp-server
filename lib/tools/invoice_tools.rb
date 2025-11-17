@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Invoice')
 
-          invoice = Quickbooks::Model::Invoice.new
-          invoice.from_json(args[:invoice].to_json)
+          invoice = ::Quickbooks::Model::Invoice.new(args[:invoice])
           result = service.create(invoice)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Invoice created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Invoice found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Invoice')
 
-          invoice = Quickbooks::Model::Invoice.new
-          invoice.from_json(args[:invoice].to_json)
+          invoice = ::Quickbooks::Model::Invoice.new(args[:invoice])
           result = service.update(invoice)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Invoice updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -147,7 +145,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: "Found #{results.count} invoices:" },
-            *results.map { |i| { type: 'text', text: JSON.pretty_generate(i.as_json) } }
+            *results.map { |i| { type: 'text', text: i.attributes } }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Account')
 
-          account = Quickbooks::Model::Account.new
-          account.from_json(args[:account].to_json)
+          account = ::Quickbooks::Model::Account.new(args[:account])
           result = service.create(account)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Account created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -59,13 +58,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Account')
 
-          account = Quickbooks::Model::Account.new
-          account.from_json(args[:account].to_json)
+          account = Quickbooks::Model::Account.new(args[:account])
           result = service.update(account)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Account updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

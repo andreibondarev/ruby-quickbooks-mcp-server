@@ -1,5 +1,6 @@
 require_relative '../helpers/format_error'
 require_relative '../helpers/search_criteria_builder'
+require "pry-byebug"
 
 module Tools
   module CustomerTools
@@ -24,7 +25,7 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Customer')
 
-          customer = Quickbooks::Model::Customer.new
+          customer = ::Quickbooks::Model::Customer.new
           customer.from_json(args[:customer].to_json)
           result = service.create(customer)
 
@@ -61,9 +62,10 @@ module Tools
 
           result = service.fetch_by_id(args[:id])
 
+          binding.pry
           MCP::Tool::Response.new([
             { type: 'text', text: 'Customer found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +94,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Customer')
 
-          customer = Quickbooks::Model::Customer.new
-          customer.from_json(args[:customer].to_json)
+          customer = ::Quickbooks::Model::Customer.new(args[:customer])
           result = service.update(customer)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Customer updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -116,13 +117,9 @@ module Tools
             id: {
               type: 'string',
               description: 'Customer ID'
-            },
-            sync_token: {
-              type: 'string',
-              description: 'SyncToken for the customer'
             }
           },
-          required: ['id', 'sync_token']
+          required: ['id']
         }
       ) do |**kwargs|
         args = kwargs[:args] || kwargs
@@ -132,12 +129,11 @@ module Tools
           service = qb_client.service('Customer')
 
           customer = service.fetch_by_id(args[:id])
-          customer.active = false
-          result = service.update(customer)
+          result = service.delete(customer)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Customer deleted (deactivated):' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Bill')
 
-          bill = Quickbooks::Model::Bill.new
-          bill.from_json(args[:bill].to_json)
+          bill = ::Quickbooks::Model::Bill.new(args[:bill])
           result = service.create(bill)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Bill')
 
-          bill = Quickbooks::Model::Bill.new
-          bill.from_json(args[:bill].to_json)
+          bill = ::Quickbooks::Model::Bill.new(args[:bill])
           result = service.update(bill)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -132,7 +130,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill deleted:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -181,7 +179,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: "Found #{results.count} bills:" },
-            *results.map { |b| { type: 'text', text: JSON.pretty_generate(b.as_json) } }
+            *results.map { |b| { type: 'text', text: b.attributes } }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

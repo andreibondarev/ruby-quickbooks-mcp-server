@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('BillPayment')
 
-          bill_payment = Quickbooks::Model::BillPayment.new
-          bill_payment.from_json(args[:bill_payment].to_json)
+          bill_payment = ::Quickbooks::Model::BillPayment.new(args[:bill_payment])
           result = service.create(bill_payment)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill payment created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill payment found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('BillPayment')
 
-          bill_payment = Quickbooks::Model::BillPayment.new
-          bill_payment.from_json(args[:bill_payment].to_json)
+          bill_payment = ::Quickbooks::Model::BillPayment.new(args[:bill_payment])
           result = service.update(bill_payment)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill payment updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -132,7 +130,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Bill payment deleted:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -181,7 +179,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: "Found #{results.count} bill payments:" },
-            *results.map { |bp| { type: 'text', text: JSON.pretty_generate(bp.as_json) } }
+            *results.map { |bp| { type: 'text', text: bp.attributes } }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

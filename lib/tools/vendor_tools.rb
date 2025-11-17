@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Vendor')
 
-          vendor = Quickbooks::Model::Vendor.new
-          vendor.from_json(args[:vendor].to_json)
+          vendor = ::Quickbooks::Model::Vendor.new(args[:vendor])
           result = service.create(vendor)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Vendor created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Vendor found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Vendor')
 
-          vendor = Quickbooks::Model::Vendor.new
-          vendor.from_json(args[:vendor].to_json)
+          vendor = ::Quickbooks::Model::Vendor.new(args[:vendor])
           result = service.update(vendor)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Vendor updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -128,12 +126,11 @@ module Tools
           service = qb_client.service('Vendor')
 
           vendor = service.fetch_by_id(args[:id])
-          vendor.active = false
-          result = service.update(vendor)
+          result = service.delete(vendor)
 
           MCP::Tool::Response.new([
-            { type: 'text', text: 'Vendor deleted (deactivated):' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: 'Vendor deleted:' },
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -182,7 +179,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: "Found #{results.count} vendors:" },
-            *results.map { |v| { type: 'text', text: JSON.pretty_generate(v.as_json) } }
+            *results.map { |v| { type: 'text', text: v.attributes } }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

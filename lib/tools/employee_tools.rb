@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Employee')
 
-          employee = Quickbooks::Model::Employee.new
-          employee.from_json(args[:employee].to_json)
+          employee = ::Quickbooks::Model::Employee.new(args[:employee])
           result = service.create(employee)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Employee created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Employee found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Employee')
 
-          employee = Quickbooks::Model::Employee.new
-          employee.from_json(args[:employee].to_json)
+          employee = ::Quickbooks::Model::Employee.new(args[:employee])
           result = service.update(employee)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Employee updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -147,7 +145,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: "Found #{results.count} employees:" },
-            *results.map { |e| { type: 'text', text: JSON.pretty_generate(e.as_json) } }
+            *results.map { |e| { type: 'text', text: e.attributes } }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

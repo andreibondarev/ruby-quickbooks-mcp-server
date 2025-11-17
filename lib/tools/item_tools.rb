@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Item')
 
-          item = Quickbooks::Model::Item.new
-          item.from_json(args[:item].to_json)
+          item = ::Quickbooks::Model::Item.new(args[:item])
           result = service.create(item)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Item created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Item found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Item')
 
-          item = Quickbooks::Model::Item.new
-          item.from_json(args[:item].to_json)
+          item = ::Quickbooks::Model::Item.new(args[:item])
           result = service.update(item)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Item updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([

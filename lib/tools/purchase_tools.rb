@@ -24,13 +24,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Purchase')
 
-          purchase = Quickbooks::Model::Purchase.new
-          purchase.from_json(args[:purchase].to_json)
+          purchase = Quickbooks::Model::Purchase.new(args[:purchase])
           result = service.create(purchase)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Purchase created:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -63,7 +62,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Purchase found:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -92,13 +91,12 @@ module Tools
           qb_client.authenticate
           service = qb_client.service('Purchase')
 
-          purchase = Quickbooks::Model::Purchase.new
-          purchase.from_json(args[:purchase].to_json)
+          purchase = Quickbooks::Model::Purchase.new(args[:purchase])
           result = service.update(purchase)
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Purchase updated:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -132,7 +130,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: 'Purchase deleted:' },
-            { type: 'text', text: JSON.pretty_generate(result.as_json) }
+            { type: 'text', text: result.attributes }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
@@ -181,7 +179,7 @@ module Tools
 
           MCP::Tool::Response.new([
             { type: 'text', text: "Found #{results.count} purchases:" },
-            *results.map { |p| { type: 'text', text: JSON.pretty_generate(p.as_json) } }
+            *results.map { |p| { type: 'text', text: p.attributes } }
           ])
         rescue StandardError => e
           MCP::Tool::Response.new([
