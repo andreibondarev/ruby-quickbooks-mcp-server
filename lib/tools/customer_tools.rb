@@ -62,7 +62,6 @@ module Tools
 
           result = service.fetch_by_id(args[:id])
 
-          binding.pry
           MCP::Tool::Response.new([
             { type: 'text', text: 'Customer found:' },
             { type: 'text', text: result.attributes }
