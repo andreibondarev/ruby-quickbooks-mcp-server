@@ -18,8 +18,8 @@ module Tools
           required: ['item']
         }
       ) do |**kwargs|
-        args = kwargs[:args] || kwargs
-        server_context = kwargs[:server_context] || {}
+        args = kwargs.except(:server_context)
+
         begin
           qb_client.authenticate
           service = qb_client.service('Item')
@@ -52,8 +52,8 @@ module Tools
           required: ['id']
         }
       ) do |**kwargs|
-        args = kwargs[:args] || kwargs
-        server_context = kwargs[:server_context] || {}
+        args = kwargs.except(:server_context)
+
         begin
           qb_client.authenticate
           service = qb_client.service('Item')
@@ -85,8 +85,8 @@ module Tools
           required: ['item']
         }
       ) do |**kwargs|
-        args = kwargs[:args] || kwargs
-        server_context = kwargs[:server_context] || {}
+        args = kwargs.except(:server_context)
+
         begin
           qb_client.authenticate
           service = qb_client.service('Item')
@@ -130,15 +130,15 @@ module Tools
           }
         }
       ) do |**kwargs|
-        args = kwargs[:args] || kwargs
-        server_context = kwargs[:server_context] || {}
+        args = kwargs.except(:server_context)
+
         begin
           qb_client.authenticate
           service = qb_client.service('Item')
 
-          query = Helpers::SearchCriteriaBuilder.build(args)
-          results = if query && !query.empty?
-            service.query(query)
+          query_result = Helpers::SearchCriteriaBuilder.build(args, 'Item')
+          results = if query_result[:query]
+            service.query(query_result[:query], **query_result[:options])
           else
             service.all
           end

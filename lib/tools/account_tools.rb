@@ -18,8 +18,8 @@ module Tools
           required: ['account']
         }
       ) do |**kwargs|
-        args = kwargs[:args] || kwargs
-        server_context = kwargs[:server_context] || {}
+        args = kwargs.except(:server_context)
+
         begin
           qb_client.authenticate
           service = qb_client.service('Account')
@@ -52,8 +52,8 @@ module Tools
           required: ['account']
         }
       ) do |**kwargs|
-        args = kwargs[:args] || kwargs
-        server_context = kwargs[:server_context] || {}
+        args = kwargs.except(:server_context)
+
         begin
           qb_client.authenticate
           service = qb_client.service('Account')
@@ -97,15 +97,15 @@ module Tools
           }
         }
       ) do |**kwargs|
-        args = kwargs[:args] || kwargs
-        server_context = kwargs[:server_context] || {}
+        args = kwargs.except(:server_context)
+
         begin
           qb_client.authenticate
           service = qb_client.service('Account')
 
-          query = Helpers::SearchCriteriaBuilder.build(args)
-          results = if query && !query.empty?
-            service.query(query)
+          query_result = Helpers::SearchCriteriaBuilder.build(args, 'Account')
+          results = if query_result[:query]
+            service.query(query_result[:query], **query_result[:options])
           else
             service.all
           end
