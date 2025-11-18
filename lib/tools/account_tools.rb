@@ -46,7 +46,7 @@ module Tools
           properties: {
             account: {
               type: 'object',
-              description: 'Account data to update (must include Id and SyncToken)'
+              description: 'Account data to update (must include id and sync_token)'
             }
           },
           required: ['account']

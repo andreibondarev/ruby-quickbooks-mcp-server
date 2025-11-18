@@ -79,7 +79,7 @@ module Tools
           properties: {
             journal_entry: {
               type: 'object',
-              description: 'Journal entry data to update (must include Id and SyncToken)'
+              description: 'Journal entry data to update (must include id and sync_token)'
             }
           },
           required: ['journal_entry']

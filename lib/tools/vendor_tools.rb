@@ -79,7 +79,7 @@ module Tools
           properties: {
             vendor: {
               type: 'object',
-              description: 'Vendor data to update (must include Id and SyncToken)'
+              description: 'Vendor data to update (must include id and sync_token)'
             }
           },
           required: ['vendor']

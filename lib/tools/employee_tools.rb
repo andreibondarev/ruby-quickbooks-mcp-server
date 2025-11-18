@@ -79,7 +79,7 @@ module Tools
           properties: {
             employee: {
               type: 'object',
-              description: 'Employee data to update (must include Id and SyncToken)'
+              description: 'Employee data to update (must include id and sync_token)'
             }
           },
           required: ['employee']

@@ -79,7 +79,7 @@ module Tools
           properties: {
             customer: {
               type: 'object',
-              description: 'Customer data to update (must include Id and SyncToken)'
+              description: 'Customer data to update (must include id and sync_token)'
             }
           },
           required: ['customer']

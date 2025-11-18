@@ -79,7 +79,7 @@ module Tools
           properties: {
             purchase: {
               type: 'object',
-              description: 'Purchase data to update (must include Id and SyncToken)'
+              description: 'Purchase data to update (must include id and sync_token)'
             }
           },
           required: ['purchase']

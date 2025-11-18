@@ -79,7 +79,7 @@ module Tools
           properties: {
             bill_payment: {
               type: 'object',
-              description: 'Bill payment data to update (must include Id and SyncToken)'
+              description: 'Bill payment data to update (must include id and sync_token)'
             }
           },
           required: ['bill_payment']

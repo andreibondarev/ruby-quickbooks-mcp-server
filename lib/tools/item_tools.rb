@@ -79,7 +79,7 @@ module Tools
           properties: {
             item: {
               type: 'object',
-              description: 'Item data to update (must include Id and SyncToken)'
+              description: 'Item data to update (must include id and sync_token)'
             }
           },
           required: ['item']

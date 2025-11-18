@@ -79,7 +79,7 @@ module Tools
           properties: {
             estimate: {
               type: 'object',
-              description: 'Estimate data to update (must include Id and SyncToken)'
+              description: 'Estimate data to update (must include id and sync_token)'
             }
           },
           required: ['estimate']

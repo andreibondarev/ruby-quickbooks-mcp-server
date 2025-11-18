@@ -79,7 +79,7 @@ module Tools
           properties: {
             invoice: {
               type: 'object',
-              description: 'Invoice data to update (must include Id and SyncToken)'
+              description: 'Invoice data to update (must include id and sync_token)'
             }
           },
           required: ['invoice']
